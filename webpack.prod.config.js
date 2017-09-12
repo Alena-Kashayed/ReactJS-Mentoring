@@ -1,9 +1,10 @@
 const path = require('path');
-const webpack = require("webpack");
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 const commonConfig = require('./webpack.common.js');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = merge(commonConfig, {
     devtool: 'source-map',
@@ -24,6 +25,6 @@ module.exports = merge(commonConfig, {
         }),
         new webpack.optimize.ModuleConcatenationPlugin(),
         new UglifyJSPlugin(),
-        new ExtractTextPlugin("styles.css"),
+        new ExtractTextPlugin('styles.css')
     ]
 });
