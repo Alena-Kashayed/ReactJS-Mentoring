@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "jest",
-    "sever start": "node server.js",
-    "start": "webpack --config webpack.config.js",
+    "start:sever": "nodemon server.js",
+    "start": "webpack --config webpack.common.config.js",
+    "start:prod": "webpack --config webpack.prod.config.js",
     "build": "webpack"
   },
   "repository": {
@@ -29,12 +30,13 @@
     "redux-form": "^7.0.4"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
+    "extract-text-webpack-plugin": "^3.0.0",
     "jest": "^21.0.2",
+    "nodemon": "^1.12.0",
     "webpack": "^3.5.6"
   }
 }
