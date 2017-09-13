@@ -7,24 +7,31 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const commonConfig = require('./webpack.common.js');
 
 module.exports = merge(commonConfig, {
-    devtool: 'source-map',
     module: {
         rules: [
             {
                 test: /\.scss$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use: ['css-loader', 'sass-loader']
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: true,
+                                localIdentName: '[path][name]__[local]--[hash:base64:5]'
+                            }
+                        }
+                        , 'sass-loader']
                 })
             }
         ]
     },
     plugins: [
         new webpack.DefinePlugin({
-            ENV: JSON.stringify(process.env.NODE_ENV === 'production')
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
         }),
         new webpack.optimize.ModuleConcatenationPlugin(),
         new UglifyJSPlugin(),
-        new ExtractTextPlugin('styles.css')
+        new ExtractTextPlugin('style_[hash].css')
     ]
 });
