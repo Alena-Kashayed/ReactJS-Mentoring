@@ -4,7 +4,7 @@ const merge = require('webpack-merge');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const commonConfig = require('./webpack.common.js');
+const commonConfig = require('./webpack.common.config');
 
 module.exports = merge(commonConfig, {
     module: {
@@ -28,7 +28,9 @@ module.exports = merge(commonConfig, {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
         }),
         new webpack.optimize.ModuleConcatenationPlugin(),
         new UglifyJSPlugin(),

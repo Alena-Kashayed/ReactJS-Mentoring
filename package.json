@@ -5,10 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "jest",
-    "start:sever": "nodemon server.js",
-    "start": "webpack-dev-server --config webpack.dev.config.js",
-    "build:prod": "webpack --config webpack.prod.config.js",
-    "build": "webpack"
+    "start:server": "nodemon server.js",
+    "start:dev": "webpack-dev-server --config webpack.dev.config.js",
+    "build:prod": "webpack --config webpack.prod.config.js"
   },
   "repository": {
     "type": "git",
@@ -40,6 +39,7 @@
     "jest": "^21.0.2",
     "nodemon": "^1.12.0",
     "webpack": "^3.5.6",
-    "webpack-dev-server": "^2.7.1"
+    "webpack-dev-server": "^2.7.1",
+    "webpack-merge": "^4.1.0"
   }
 }

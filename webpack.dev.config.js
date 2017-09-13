@@ -1,8 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const merge = require('webpack-merge');
 
-const commonConfig = require('./webpack.common.js');
+const commonConfig = require('./webpack.common.config');
 
 module.exports = merge(commonConfig, {
     devtool: 'inline-source-map',
@@ -10,6 +10,7 @@ module.exports = merge(commonConfig, {
         rules: [{
             test: /\.scss$/,
             use: [
+                { loader: "style-loader" },
                 {
                     loader: 'css-loader',
                     options: {
@@ -23,13 +24,8 @@ module.exports = merge(commonConfig, {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-        }),
-        new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'dev', 'index_[hash].html'),
-            files: {
-                css: ['style_[hash].css'],
-                js: ['[name]_[hash].js']
+            'process.env': {
+                'NODE_ENV': JSON.stringify('development')
             }
         })
     ],
