@@ -10,15 +10,15 @@ module.exports = merge(commonConfig, {
         rules: [{
             test: /\.scss$/,
             use: [
-                { loader: "style-loader" },
+                'style-loader',
                 {
                     loader: 'css-loader',
                     options: {
                         modules: true,
                         localIdentName: '[path][name]__[local]--[hash:base64:5]'
                     }
-                }
-                , 'sass-loader'
+                },
+                'sass-loader'
             ]
         }]
     },
