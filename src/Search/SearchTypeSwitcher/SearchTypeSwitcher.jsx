@@ -12,9 +12,13 @@ function SearchTypeSwitcher(props) {
                 <button className={cx('searchByTitle', 'searchByBtn')}>
                     Title
                 </button>
-                <button>Director</button>
+                <button className={cx('searchByDirector', 'searchByBtn', 'active')}>
+                    Director
+                </button>
             </div>
-            <button>Search</button>
+            <button className={cx('search', 'searchByBtn')}>
+                Search
+            </button>
         </div>
     );
 }

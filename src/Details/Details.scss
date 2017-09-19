@@ -1,0 +1,97 @@
+.detailsWrapper {
+  display: flex;
+  padding: 15px 90px 30px 50px;
+  width: 100%;
+  justify-content: space-between;
+  background-image: url("../assets/img/popsignuptwoweeks.jpg");
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  position: relative;
+  box-sizing: border-box;
+  &::before {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .details {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .logoBlock {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      .logo {
+        color: #F55263;
+        font-weight: 600;
+        margin-left: 50px;
+      }
+      .searchBtn {
+        text-transform: uppercase;
+        color: #F55263;
+        font-weight: 600;
+        border: none;
+        padding: 5px 10px;
+        background-color: #FFFFFF;
+        border-radius: 2px;
+      }
+    }
+    .content {
+      display: flex;
+      .description {
+        margin-left: 60px;
+        color: #FFFFFF;
+        .movieTitle {
+          color: #F55263;
+          font-size: 35px;
+          margin: 15px 0;
+          .movieRating {
+            margin-left: 25px;
+            font-weight: 100;
+            font-size: 25px;
+            color: #B8E986;
+            border: 1px solid;
+            border-radius: 50%;
+            display: inline-block;
+            padding: 10px 8px;
+          }
+        }
+        .movieGenre {
+          font-size: 16px;
+        }
+        .movieInfo {
+          margin: 10px 0 20px;
+          font-weight: 600;
+          display: flex;
+          .movieTime {
+            margin-left: 30px;
+          }
+        }
+        .text {
+          font-size: 16px;
+        }
+
+        .additionalInfo {
+          font-size: 14px;
+        }
+      }
+
+    }
+  }
+}
+.info {
+  background-color: #F5F5F5;
+  height: 55px;
+  padding: 18px 125px;
+  box-sizing: border-box;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  color: #424242;
+}
