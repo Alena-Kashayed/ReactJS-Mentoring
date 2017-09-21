@@ -1,0 +1,62 @@
+.searchWrapper {
+
+  .search {
+    padding: 15px 0 20px;
+    width: 100%;
+    color: #F55263;
+    background-image: url("../assets/img/popsignuptwoweeks.jpg");
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    min-height: 445px;
+
+    &::before {
+      content: "";
+      display: block;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .content {
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 100%;
+      max-width: 1200px;
+
+      .logo {
+        margin-bottom: 30px;
+      }
+
+      .searchLabel {
+        color: #FFFFFF;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+      }
+
+      .searchInput {
+        background-color: #000000;
+        padding: 10px 15px;
+        border: none;
+        border-bottom: 2px solid #F55263;
+        margin-bottom: 10px;
+        color: #FFFFFF;;
+        /////  placeholder styles
+        &:focus::-webkit-input-placeholder {color: transparent}
+        &:focus::-moz-placeholder          {color: transparent}
+        &:focus:-moz-placeholder           {color: transparent}
+        &:focus:-ms-input-placeholder      {color: transparent}
+      }
+    }
+  }
+}
+
