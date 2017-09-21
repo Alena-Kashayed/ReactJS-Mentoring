@@ -4,15 +4,30 @@ import styles from './SearchTypeSwitcher.scss';
 
 function SearchTypeSwitcher() {
   const cx = classNames.bind(styles);
+  // let searchBy = 'Title';
+
+  const handleChangeSearchType = (e) => {
+    const searchByBtns = e.target.parentNode.querySelectorAll('button');
+    // searchBy = e.target.textContent;
+    searchByBtns.forEach((searchByBtn) => {
+      searchByBtn.classList.toggle('active');
+    });
+  };
 
   return (
     <div className={styles.SearchTypeSwitcher}>
       <div className={styles.searchByGroup}>
         <span className={styles.searchBy}>Search by</span>
-        <button className={cx('searchByTitle', 'searchByBtn')}>
+        <button
+          className={cx('searchByTitle', 'searchByBtn')}
+          onClick={handleChangeSearchType}
+        >
           Title
         </button>
-        <button className={cx('searchByDirector', 'searchByBtn', 'active')}>
+        <button
+          className={cx('searchByDirector', 'searchByBtn', 'active')}
+          onClick={handleChangeSearchType}
+        >
           Director
         </button>
       </div>

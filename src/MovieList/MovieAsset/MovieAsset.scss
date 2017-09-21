@@ -7,10 +7,12 @@
     border: none;
     background-color: transparent;
   }
+
   .moviePoster {
     width: 240px;
     height: 330px;
   }
+
   .movieTitle {
     display: flex;
     justify-content: space-between;
@@ -26,6 +28,7 @@
       font-size: 12px;
     }
   }
+
   .movieGenre {
     font-size: 12px;
     padding: 5px;

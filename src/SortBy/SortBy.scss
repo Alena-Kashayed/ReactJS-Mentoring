@@ -2,23 +2,28 @@
   min-width: 240px;
   display: flex;
   justify-content: space-between;
+
   .sortBy {
     font-size: 16px;
     color: #525252;
   }
+
   .sortByBtn {
     border: none;
     background-color: transparent;
     font-weight: 600;
     font-size: 16px;
     color: #525252;
+
     &.active {
       color: #F55263;
     }
   }
+
   .releaseDay {
 
   }
+
   .rating {
 
   }

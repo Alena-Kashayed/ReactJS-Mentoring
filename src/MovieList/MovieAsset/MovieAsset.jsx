@@ -2,38 +2,41 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styles from './MovieAsset.scss';
 
-function MovieAsset(props) {
-  const showDetails = () => {
-    props.showDetails(props);
+const MovieAsset = (props) => {
+  const { handleShowDetails } = props;
+  const { poster, show_title: showTitle, release_year: releaseYear, category } = props.asset;
+  const handleShowMovieDetails = () => {
+    handleShowDetails(props);
   };
 
   return (
     <div className={styles.movieAsset}>
       <button
         type="button"
-        onClick={showDetails}
+        onClick={handleShowMovieDetails}
       >
         <img
           className={styles.moviePoster}
-          src={props.url}
-          alt={props.name}
+          src={poster}
+          alt={showTitle}
         />
       </button>
       <div className={styles.movieTitle}>
-        <div>{props.name}</div>
-        <div className={styles.movieYear}>{props.year}</div>
+        <div>{showTitle}</div>
+        <div className={styles.movieYear}>{releaseYear}</div>
       </div>
-      <div className={styles.movieGenre}>{props.genre}</div>
+      <div className={styles.movieGenre}>{category}</div>
     </div>
   );
-}
+};
 
 MovieAsset.propTypes = {
-  showDetails: PropTypes.func.isRequired,
-  url: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  year: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
+  handleShowDetails: PropTypes.func,
+  asset: PropTypes.objectOf(PropTypes.shape({})).isRequired,
+};
+
+MovieAsset.defaultProps = {
+  handleShowDetails: () => {},
 };
 
 export default MovieAsset;
