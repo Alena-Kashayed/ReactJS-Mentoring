@@ -1,4 +1,5 @@
 .searchWrapper {
+
   .search {
     padding: 15px 85px 20px;
     width: 100%;
@@ -10,6 +11,7 @@
     display: flex;
     position: relative;
     box-sizing: border-box;
+
     &::before {
       content: "";
       display: block;
@@ -20,6 +22,7 @@
       left: 0;
       background-color: rgba(0, 0, 0, 0.5);
     }
+
     .content {
       z-index: 2;
       display: flex;
@@ -29,11 +32,13 @@
       .logo {
         margin-bottom: 30px;
       }
+
       .searchLabel {
         color: #FFFFFF;
         text-transform: uppercase;
         margin-bottom: 15px;
       }
+
       .searchInput {
         background-color: #000000;
         padding: 10px 15px;
@@ -48,15 +53,6 @@
         &:focus:-ms-input-placeholder      {color: transparent}
       }
     }
-  }
-  .info {
-    background-color: #F5F5F5;
-    height: 55px;
-    padding: 18px 85px;
-    box-sizing: border-box;
-    font-weight: 600;
-    display: flex;
-    justify-content: space-between;
   }
 }
 

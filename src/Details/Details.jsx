@@ -2,8 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styles from './Details.scss';
 
-function Details(props) {
-  const movieDetails = props.movieDetails;
+const Details = (props) => {
+  const { handleShowSearch } = props;
+  const { asset } = props.movieDetails;
   return (
     <section>
       <div className={styles.detailsWrapper}>
@@ -13,52 +14,49 @@ function Details(props) {
             <button
               className={styles.searchBtn}
               type="button"
-              onClick={props.showSearch}
+              onClick={handleShowSearch}
             >
               Search
             </button>
           </div>
           <div className={styles.content}>
             <div>
-              <img src={movieDetails.url} alt={movieDetails.name} />
+              <img src={asset.poster} alt={asset.show_title} />
             </div>
             <div className={styles.description}>
               <h2 className={styles.movieTitle}>
-                {movieDetails.name}
+                {asset.show_title}
                 <span className={styles.movieRating}>
-                  {movieDetails.rating}
+                  {asset.rating}
                 </span>
               </h2>
-              <div className={styles.movieGenre}>{movieDetails.genre}</div>
+              <div className={styles.movieGenre}>{asset.category}</div>
               <div className={styles.movieInfo}>
-                <div className={styles.movieYear}>{movieDetails.year}</div>
-                <div className={styles.movieTime}>{movieDetails.runtime}</div>
+                <div className={styles.movieYear}>{asset.release_year}</div>
+                <div className={styles.movieTime}>{asset.runtime}</div>
               </div>
               <article className={styles.text}>
-                {movieDetails.description}
+                {asset.summary}
               </article>
               <p className={styles.additionalInfo}>
-                <span>Director:&nbsp;</span>
-                {movieDetails.director}
+                <span>Director: </span>
+                {asset.director}
               </p>
               <p className={styles.additionalInfo}>
-                <span>Cast:&nbsp;</span>
-                {movieDetails.cast}
+                <span>Cast: </span>
+                {asset.show_cast}
               </p>
             </div>
           </div>
         </div>
       </div>
-      <div className={styles.info}>
-        <div>Films by {movieDetails.director}</div>
-      </div>
     </section>
   );
-}
+};
 
 Details.propTypes = {
-  movieDetails: PropTypes.objectOf.isRequired,
-  showSearch: PropTypes.bool.isRequired,
+  movieDetails: PropTypes.shape({}).isRequired,
+  handleShowSearch: PropTypes.func.isRequired,
 };
 
 export default Details;
