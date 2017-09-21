@@ -2,23 +2,33 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styles from './InfoBar.scss';
 
-const InfoBar = (props) => {
-  const { movieDetails, moviesCount, onShowSearch } = props;
-  return (
-    onShowSearch ?
-      <div className={styles.infoBar}>{moviesCount} movies found</div>
-      : (
-        <div className={styles.info}>
-          <div>Films by {movieDetails.asset.director}</div>
-        </div>
-      )
-  );
-};
+const InfoBar = ({ movieDetails, moviesCount, onShowSearch }) => (
+  onShowSearch ?
+    <div className={styles.infoBar}>{moviesCount} movies found</div>
+    : (
+      <div className={styles.info}>
+        <div>Films by {movieDetails.director}</div>
+      </div>
+    )
+);
 
 InfoBar.propTypes = {
   moviesCount: PropTypes.number.isRequired,
   onShowSearch: PropTypes.bool.isRequired,
-  movieDetails: PropTypes.shape({}),
+  movieDetails: PropTypes.shape({
+    category: PropTypes.string,
+    director: PropTypes.string,
+    mediatype: PropTypes.number,
+    poster: PropTypes.string,
+    rating: PropTypes.string,
+    release_year: PropTypes.string,
+    runtime: PropTypes.string,
+    show_cast: PropTypes.string,
+    show_id: PropTypes.number,
+    show_title: PropTypes.string,
+    summary: PropTypes.string,
+    unit: PropTypes.number,
+  }),
 };
 
 InfoBar.defaultProps = {

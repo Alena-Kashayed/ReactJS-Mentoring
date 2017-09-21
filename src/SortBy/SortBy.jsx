@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styles from './SortBy.scss';
 
-const SortBy = (props) => {
-  const { onShowSearch } = props;
+const SortBy = ({ onShowSearch }) => {
   const cx = classNames.bind(styles);
   return onShowSearch ? (
     <div className={styles.sortByGroup}>

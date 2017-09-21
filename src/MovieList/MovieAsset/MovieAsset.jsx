@@ -2,25 +2,25 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styles from './MovieAsset.scss';
 
-const MovieAsset = (props) => {
-  const { handleShowDetails } = props;
-  const { poster, show_title: showTitle, release_year: releaseYear, category } = props.asset;
+const MovieAsset = ({ handleShowDetails, asset }) => {
+  const { poster, show_title: showTitle, release_year: releaseYear, category } = asset;
   const handleShowMovieDetails = () => {
-    handleShowDetails(props);
+    handleShowDetails(asset);
   };
 
   return (
     <div className={styles.movieAsset}>
-      <button
-        type="button"
+      <div
+        className={styles.poster}
         onClick={handleShowMovieDetails}
+        role="presentation"
       >
         <img
           className={styles.moviePoster}
           src={poster}
           alt={showTitle}
         />
-      </button>
+      </div>
       <div className={styles.movieTitle}>
         <div>{showTitle}</div>
         <div className={styles.movieYear}>{releaseYear}</div>

@@ -3,8 +3,7 @@ import React from 'react';
 import MovieAsset from './MovieAsset/MovieAsset';
 import styles from './MovieList.scss';
 
-const MovieList = (props) => {
-  const { assets, handleShowDetails } = props;
+const MovieList = ({ assets, handleShowDetails }) => {
   const handleShowMovieDetails = (movieDetails) => {
     handleShowDetails(movieDetails);
   };
@@ -23,7 +22,20 @@ const MovieList = (props) => {
 
 MovieList.propTypes = {
   handleShowDetails: PropTypes.func,
-  assets: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  assets: PropTypes.arrayOf(PropTypes.shape({
+    category: PropTypes.string,
+    director: PropTypes.string,
+    mediatype: PropTypes.number,
+    poster: PropTypes.string,
+    rating: PropTypes.string,
+    release_year: PropTypes.string,
+    runtime: PropTypes.string,
+    show_cast: PropTypes.string,
+    show_id: PropTypes.number,
+    show_title: PropTypes.string,
+    summary: PropTypes.string,
+    unit: PropTypes.number,
+  })).isRequired,
 };
 
 MovieList.defaultProps = {

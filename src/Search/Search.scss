@@ -1,7 +1,7 @@
 .searchWrapper {
 
   .search {
-    padding: 15px 85px 20px;
+    padding: 15px 0 20px;
     width: 100%;
     color: #F55263;
     background-image: url("../assets/img/popsignuptwoweeks.jpg");
@@ -9,8 +9,10 @@
     background-position: 50% 0;
     font-weight: 600;
     display: flex;
+    justify-content: center;
     position: relative;
     box-sizing: border-box;
+    min-height: 445px;
 
     &::before {
       content: "";
@@ -27,7 +29,9 @@
       z-index: 2;
       display: flex;
       flex-direction: column;
+      justify-content: space-around;
       width: 100%;
+      max-width: 1200px;
 
       .logo {
         margin-bottom: 30px;

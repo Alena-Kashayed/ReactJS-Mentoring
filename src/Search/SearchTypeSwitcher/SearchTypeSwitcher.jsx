@@ -1,40 +1,64 @@
 import classNames from 'classnames/bind';
-import React from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import styles from './SearchTypeSwitcher.scss';
 
-function SearchTypeSwitcher() {
-  const cx = classNames.bind(styles);
-  // let searchBy = 'Title';
+class SearchTypeSwitcher extends Component {
+  constructor(props) {
+    super(props);
+    this.cx = classNames.bind(styles);
+    this.state = {
+      searchBy: 'title',
+    };
+  }
 
-  const handleChangeSearchType = (e) => {
-    const searchByBtns = e.target.parentNode.querySelectorAll('button');
-    // searchBy = e.target.textContent;
-    searchByBtns.forEach((searchByBtn) => {
-      searchByBtn.classList.toggle('active');
+  handleChangeSearchType = (e) => {
+    this.setState({
+      searchBy: e.target.textContent.toLowerCase(),
     });
   };
 
-  return (
+  handleSearchType = () => {
+    this.props.handleSearchType(this.state.searchBy);
+  };
+
+  render = () => (
     <div className={styles.SearchTypeSwitcher}>
       <div className={styles.searchByGroup}>
         <span className={styles.searchBy}>Search by</span>
         <button
-          className={cx('searchByTitle', 'searchByBtn')}
-          onClick={handleChangeSearchType}
+          className={this.cx('searchByTitle', 'searchByBtn', (this.state.searchBy === 'title' ?
+            'active' :
+            ''))}
+          onClick={this.handleChangeSearchType}
         >
           Title
         </button>
         <button
-          className={cx('searchByDirector', 'searchByBtn', 'active')}
-          onClick={handleChangeSearchType}
+          className={this.cx('searchByDirector', 'searchByBtn', (this.state.searchBy === 'director' ?
+            'active' :
+            ''))}
+          onClick={this.handleChangeSearchType}
         >
           Director
         </button>
       </div>
-      <button className={cx('search', 'searchByBtn')}>
-          Search
+      <button
+        className={this.cx('search', 'searchByBtn')}
+        onClick={this.handleSearchType}
+      >
+        Search
       </button>
     </div>
   );
 }
+
+SearchTypeSwitcher.propTypes = {
+  handleSearchType: PropTypes.func,
+};
+
+SearchTypeSwitcher.defaultProps = {
+  handleSearchType: () => {},
+};
+
 export default SearchTypeSwitcher;
