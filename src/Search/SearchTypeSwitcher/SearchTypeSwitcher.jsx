@@ -22,35 +22,37 @@ class SearchTypeSwitcher extends Component {
     this.props.handleSearchType(this.state.searchBy);
   };
 
-  render = () => (
-    <div className={styles.SearchTypeSwitcher}>
-      <div className={styles.searchByGroup}>
-        <span className={styles.searchBy}>Search by</span>
+  render() {
+    return (
+      <div className={styles.SearchTypeSwitcher}>
+        <div className={styles.searchByGroup}>
+          <span className={styles.searchBy}>Search by</span>
+          <button
+            className={this.cx('searchByTitle', 'searchByBtn', (this.state.searchBy === 'title' ?
+              'active' :
+              ''))}
+            onClick={this.handleChangeSearchType}
+          >
+            Title
+          </button>
+          <button
+            className={this.cx('searchByDirector', 'searchByBtn', (this.state.searchBy === 'director' ?
+              'active' :
+              ''))}
+            onClick={this.handleChangeSearchType}
+          >
+            Director
+          </button>
+        </div>
         <button
-          className={this.cx('searchByTitle', 'searchByBtn', (this.state.searchBy === 'title' ?
-            'active' :
-            ''))}
-          onClick={this.handleChangeSearchType}
+          className={this.cx('search', 'searchByBtn')}
+          onClick={this.handleSearchType}
         >
-          Title
-        </button>
-        <button
-          className={this.cx('searchByDirector', 'searchByBtn', (this.state.searchBy === 'director' ?
-            'active' :
-            ''))}
-          onClick={this.handleChangeSearchType}
-        >
-          Director
+          Search
         </button>
       </div>
-      <button
-        className={this.cx('search', 'searchByBtn')}
-        onClick={this.handleSearchType}
-      >
-        Search
-      </button>
-    </div>
-  );
+    );
+  }
 }
 
 SearchTypeSwitcher.propTypes = {
