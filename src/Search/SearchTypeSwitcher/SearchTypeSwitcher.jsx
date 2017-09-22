@@ -14,7 +14,7 @@ class SearchTypeSwitcher extends Component {
 
   handleChangeSearchType = (e) => {
     this.setState({
-      searchBy: e.target.textContent.toLowerCase(),
+      searchBy: e.target.getAttribute('data-sortby'),
     });
   };
 
@@ -32,6 +32,7 @@ class SearchTypeSwitcher extends Component {
               'active' :
               ''))}
             onClick={this.handleChangeSearchType}
+            data-sortby="title"
           >
             Title
           </button>
@@ -40,6 +41,7 @@ class SearchTypeSwitcher extends Component {
               'active' :
               ''))}
             onClick={this.handleChangeSearchType}
+            data-sortby="director"
           >
             Director
           </button>
