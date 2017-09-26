@@ -5,5 +5,8 @@
     "parser": "babel-eslint",
     "extends": [
         "airbnb"
-    ]
+    ],
+    "rules": {
+        "no-shadow": [2, {"allow": ["Component"]}]
+    }
 }

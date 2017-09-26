@@ -1,28 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import styles from './Search.scss';
 import SearchTypeSwitcher from './SearchTypeSwitcher/SearchTypeSwitcher';
 
 class Search extends Component {
-  constructor(props) {
-    super(props);
-    const params = new URLSearchParams(props.location.search);
-    const directorSearch = params.get('director') ? params.get('director') : '';
-    const search = params.get('title') ? params.get('title') : directorSearch;
-    const directorSearchBy = params.get('director') ? 'director' : '';
-    const searchBy = params.get('title') ? 'title' : directorSearchBy;
-    this.state = {
-      searchBy,
-      search,
-    };
+  componentWillMount() {
+    const params = new URLSearchParams(this.props.location.search);
+    this.setState({
+      name: params.get('name') ? params.get('name') : '',
+      type: params.get('type') ? params.get('type') : 'title',
+    });
   }
   handleChangeSearch = (e) => {
     this.setState({
-      search: e.target.value,
+      name: e.target.value,
+    });
+  };
+  handleChangeType = (type) => {
+    this.setState({
+      type,
     });
   };
   render() {
+    const { name, type } = this.state;
     return (
       <div>
         <section className={styles.searchWrapper}>
@@ -37,13 +39,18 @@ class Search extends Component {
                 className={styles.searchInput}
                 type="text"
                 placeholder="Quentin Tarantino"
-                value={this.state.search}
+                value={name}
                 onChange={this.handleChangeSearch}
               />
-              <SearchTypeSwitcher
-                searchBy={this.state.searchBy}
-                search={this.state.search}
-              />
+              <div className={styles.switcherGroup}>
+                <SearchTypeSwitcher
+                  type={type}
+                  handleChangeType={this.handleChangeType}
+                />
+                <Link to={`/search?name=${name}&type=${type}`} className={styles.searchByBtn}>
+                  Search
+                </Link>
+              </div>
             </div>
           </div>
         </section>

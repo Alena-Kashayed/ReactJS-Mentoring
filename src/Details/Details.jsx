@@ -4,20 +4,14 @@ import { Link } from 'react-router-dom';
 
 import styles from './Details.scss';
 
-const Details = ({ handleShowSearch, movieDetails }) => (
+const Details = ({ movieDetails }) => (
   <section>
     <div className={styles.detailsWrapper}>
       <div className={styles.details}>
         <div className={styles.logoBlock}>
           <div className={styles.logo}>Netflixtrullete</div>
-          <Link to="/search/">
-            <button
-              className={styles.searchBtn}
-              type="button"
-              onClick={handleShowSearch}
-            >
+          <Link to="/search/" className={styles.searchBtn}>
               Search
-            </button>
           </Link>
         </div>
         <div className={styles.content}>
@@ -69,11 +63,6 @@ Details.propTypes = {
     summary: PropTypes.string,
     unit: PropTypes.number,
   }).isRequired,
-  handleShowSearch: PropTypes.func,
-};
-
-Details.defaultProps = {
-  handleShowSearch: () => {},
 };
 
 export default Details;

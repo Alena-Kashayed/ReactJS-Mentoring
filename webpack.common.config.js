@@ -6,7 +6,7 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   output: {
     filename: '[name]_[hash].js',
-    path: path.resolve(__dirname, 'dist/'),
+    path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
   },
   module: {

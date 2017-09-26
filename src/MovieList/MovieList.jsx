@@ -18,8 +18,7 @@ const MovieList = ({ assets, handleShowDetails }) => {
             handleShowDetails={handleShowMovieDetails}
           />
         ))}
-      </div> :
-      <div className={styles.emptyPage}>No films found</div>
+      </div> : null
   );
 };
 

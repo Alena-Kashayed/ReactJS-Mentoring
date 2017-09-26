@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import Search from './Search/Search';
 import Details from './Details/Details';
@@ -8,6 +8,7 @@ import Footer from './Footer/Footer';
 import styles from './App.scss';
 import InfoBar from './InfoBar/InfoBar';
 import SortBy from './SortBy/SortBy';
+import NotFound from './NotFound/NotFound';
 import data from './assets/data.json';
 
 class App extends Component {
@@ -25,41 +26,40 @@ class App extends Component {
     });
   };
 
-  handleShowSearch = () => {
-    this.setState({
-      movieDetails: null,
-    });
-  };
-
   render() {
     const { assets, movieDetails } = this.state;
+    const SearchRoute = ({ component: Component, ...rest }) => (
+      <Route
+        {...rest}
+        render={props => (
+          <Component
+            moviesCount={assets.length}
+            {...props}
+          />)}
+      />
+    );
+    const MovieDetailsRoute = ({ component: Component, ...rest }) => (
+      <Route
+        {...rest}
+        render={props => (
+          <Component
+            movieDetails={movieDetails}
+            {...props}
+          />)}
+      />
+    );
 
     return (
       <div className={styles.app}>
         <div className={styles.headerBlock}>
           <Switch>
+            <SearchRoute exact path="/" component={Search} />
+            <SearchRoute path="/search" component={Search} />
+            <MovieDetailsRoute path="/film/:title" component={Details} />
             <Route
-              path="/search"
-              component={props =>
-                (<Search
-                  location={props.location}
-                  moviesCount={assets.length}
-                />)
-              }
-            />
-            <Route
-              path="/film/:title"
-              component={props =>
-                (<Details
-                  match={props.match}
-                  movieDetails={movieDetails}
-                  handleShowSearch={this.handleShowSearch}
-                />)
-              }
-            />
-            <Redirect
-              from="*"
-              to="/search/"
+              path="*"
+              render={() =>
+                <NotFound />}
             />
           </Switch>
           {assets.length ? (
@@ -75,9 +75,19 @@ class App extends Component {
           }
         </div>
         <div className={styles.contentBlock}>
-          <MovieList
-            assets={assets}
-            handleShowDetails={this.handleShowDetails}
+          <Route
+            exact
+            path="/"
+            render={() =>
+              <div className={styles.emptyPage}>No films found</div>
+            }
+          />
+          <Route
+            path="/search"
+            render={() => (<MovieList
+              assets={assets}
+              handleShowDetails={this.handleShowDetails}
+            />)}
           />
         </div>
         <div className={styles.footerBlock}>
