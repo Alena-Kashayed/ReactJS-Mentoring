@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import MovieAsset from './MovieAsset/MovieAsset';
 import styles from './MovieList.scss';
 
@@ -8,15 +9,17 @@ const MovieList = ({ assets, handleShowDetails }) => {
     handleShowDetails(movieDetails);
   };
   return (
-    <div className={styles.movieList}>
-      {assets.map(asset => (
-        <MovieAsset
-          key={asset.show_id}
-          asset={asset}
-          handleShowDetails={handleShowMovieDetails}
-        />
-      ))}
-    </div>
+    assets.length ?
+      <div className={styles.movieList}>
+        {assets.map(asset => (
+          <MovieAsset
+            key={asset.show_id}
+            asset={asset}
+            handleShowDetails={handleShowMovieDetails}
+          />
+        ))}
+      </div> :
+      <div className={styles.emptyPage}>No films found</div>
   );
 };
 

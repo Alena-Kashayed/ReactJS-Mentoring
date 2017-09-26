@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import styles from './Details.scss';
 
 const Details = ({ handleShowSearch, movieDetails }) => (
@@ -8,13 +10,15 @@ const Details = ({ handleShowSearch, movieDetails }) => (
       <div className={styles.details}>
         <div className={styles.logoBlock}>
           <div className={styles.logo}>Netflixtrullete</div>
-          <button
-            className={styles.searchBtn}
-            type="button"
-            onClick={handleShowSearch}
-          >
-            Search
-          </button>
+          <Link to="/search/">
+            <button
+              className={styles.searchBtn}
+              type="button"
+              onClick={handleShowSearch}
+            >
+              Search
+            </button>
+          </Link>
         </div>
         <div className={styles.content}>
           <div>

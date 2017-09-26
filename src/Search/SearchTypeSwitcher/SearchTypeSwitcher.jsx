@@ -1,6 +1,8 @@
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 import styles from './SearchTypeSwitcher.scss';
 
 class SearchTypeSwitcher extends Component {
@@ -8,7 +10,7 @@ class SearchTypeSwitcher extends Component {
     super(props);
     this.cx = classNames.bind(styles);
     this.state = {
-      searchBy: 'title',
+      searchBy: props.searchBy ? props.searchBy : 'title',
     };
   }
 
@@ -16,10 +18,6 @@ class SearchTypeSwitcher extends Component {
     this.setState({
       searchBy: e.target.getAttribute('data-sortby'),
     });
-  };
-
-  handleSearchType = () => {
-    this.props.handleSearchType(this.state.searchBy);
   };
 
   render() {
@@ -46,23 +44,21 @@ class SearchTypeSwitcher extends Component {
             Director
           </button>
         </div>
-        <button
-          className={this.cx('search', 'searchByBtn')}
-          onClick={this.handleSearchType}
-        >
-          Search
-        </button>
+        <Link to={`/search?${this.state.searchBy}=${this.props.search}`}>
+          <button
+            className={this.cx('search', 'searchByBtn')}
+          >
+            Search
+          </button>
+        </Link>
       </div>
     );
   }
 }
 
 SearchTypeSwitcher.propTypes = {
-  handleSearchType: PropTypes.func,
-};
-
-SearchTypeSwitcher.defaultProps = {
-  handleSearchType: () => {},
+  search: PropTypes.string.isRequired,
+  searchBy: PropTypes.string.isRequired,
 };
 
 export default SearchTypeSwitcher;

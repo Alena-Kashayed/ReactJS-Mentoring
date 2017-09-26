@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
+
 import Search from './Search/Search';
 import Details from './Details/Details';
 import MovieList from './MovieList/MovieList';
@@ -12,60 +14,71 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      onShowSearch: true,
-      showMovieList: true,
       assets: data,
+      // assets: [], // No films found
     };
   }
 
   handleShowDetails = (movieDetails) => {
     this.setState({
-      onShowSearch: false,
       movieDetails,
     });
   };
 
   handleShowSearch = () => {
     this.setState({
-      onShowSearch: true,
+      movieDetails: null,
     });
   };
 
   render() {
-    const { assets, onShowSearch, movieDetails, showMovieList } = this.state;
+    const { assets, movieDetails } = this.state;
+
     return (
       <div className={styles.app}>
         <div className={styles.headerBlock}>
-          {onShowSearch ? (
-            <Search moviesCount={assets.length} />
-          ) : (
-            <Details
-              movieDetails={movieDetails}
-              handleShowSearch={this.handleShowSearch}
+          <Switch>
+            <Route
+              path="/search"
+              component={props =>
+                (<Search
+                  location={props.location}
+                  moviesCount={assets.length}
+                />)
+              }
             />
-          )}
-          {showMovieList ? (
+            <Route
+              path="/film/:title"
+              component={props =>
+                (<Details
+                  match={props.match}
+                  movieDetails={movieDetails}
+                  handleShowSearch={this.handleShowSearch}
+                />)
+              }
+            />
+            <Redirect
+              from="*"
+              to="/search/"
+            />
+          </Switch>
+          {assets.length ? (
             <div className={styles.info}>
               <InfoBar
                 movieDetails={movieDetails}
                 moviesCount={assets.length}
-                onShowSearch={onShowSearch}
               />
               <SortBy
-                onShowSearch={onShowSearch}
+                movieDetails={movieDetails}
               />
             </div>) : <div className={styles.info}>{null}</div>
           }
         </div>
         <div className={styles.contentBlock}>
-          {showMovieList ? (
-            <MovieList
-              assets={assets}
-              handleShowDetails={this.handleShowDetails}
-            />
-          ) : (
-            <div className={styles.emptyPage}>No films found</div>
-          )}
+          <MovieList
+            assets={assets}
+            handleShowDetails={this.handleShowDetails}
+          />
         </div>
         <div className={styles.footerBlock}>
           <Footer />

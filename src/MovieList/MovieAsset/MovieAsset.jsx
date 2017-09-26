@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import styles from './MovieAsset.scss';
 
 const MovieAsset = ({ handleShowDetails, asset }) => {
@@ -10,17 +12,19 @@ const MovieAsset = ({ handleShowDetails, asset }) => {
 
   return (
     <div className={styles.movieAsset}>
-      <div
-        className={styles.poster}
-        onClick={handleShowMovieDetails}
-        role="presentation"
-      >
-        <img
-          className={styles.moviePoster}
-          src={poster}
-          alt={showTitle}
-        />
-      </div>
+      <Link to={`/film/${showTitle}`}>
+        <div
+          className={styles.poster}
+          onClick={handleShowMovieDetails}
+          role="presentation"
+        >
+          <img
+            className={styles.moviePoster}
+            src={poster}
+            alt={showTitle}
+          />
+        </div>
+      </Link>
       <div className={styles.movieTitle}>
         <div>{showTitle}</div>
         <div className={styles.movieYear}>{releaseYear}</div>
