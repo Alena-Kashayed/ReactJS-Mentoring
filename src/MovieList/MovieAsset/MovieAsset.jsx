@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom';
 import styles from './MovieAsset.scss';
 
 const MovieAsset = ({ handleShowDetails, asset }) => {
-  const { poster, show_title: showTitle, release_year: releaseYear, category } = asset;
+  const { poster, show_id: id, show_title: showTitle, release_year: releaseYear, category } = asset;
   const handleShowMovieDetails = () => {
     handleShowDetails(asset);
   };
 
   return (
     <div className={styles.movieAsset}>
-      <Link to={`/film/${showTitle}`}>
+      <Link to={`/film/${id}`}>
         <div
           className={styles.poster}
           onClick={handleShowMovieDetails}
