@@ -11,18 +11,18 @@
     flex: 1 0 auto;
     display: flex;
     justify-content: center;
+
+    .emptyPage {
+      color: #C8C8C8;
+      display: flex;
+      justify-content: center;
+      font-size: 60px;
+      margin-top: 100px;
+    }
   }
 
   .footerBlock {
     flex: 0 0 auto;
-  }
-
-  .emptyPage {
-    color: #C8C8C8;
-    display: flex;
-    justify-content: center;
-    font-size: 60px;
-    margin-top: 100px;
   }
 
   .info {
