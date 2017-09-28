@@ -4,18 +4,14 @@ import { Link } from 'react-router-dom';
 
 import styles from './MovieAsset.scss';
 
-const MovieAsset = ({ handleShowDetails, asset }) => {
+const MovieAsset = ({ asset }) => {
   const { poster, show_id: id, show_title: showTitle, release_year: releaseYear, category } = asset;
-  const handleShowMovieDetails = () => {
-    handleShowDetails(asset);
-  };
 
   return (
     <div className={styles.movieAsset}>
       <Link to={`/film/${id}`}>
         <div
           className={styles.poster}
-          onClick={handleShowMovieDetails}
           role="presentation"
         >
           <img
@@ -35,7 +31,6 @@ const MovieAsset = ({ handleShowDetails, asset }) => {
 };
 
 MovieAsset.propTypes = {
-  handleShowDetails: PropTypes.func,
   asset: PropTypes.shape({
     category: PropTypes.string,
     director: PropTypes.string,
@@ -50,10 +45,6 @@ MovieAsset.propTypes = {
     summary: PropTypes.string,
     unit: PropTypes.number,
   }).isRequired,
-};
-
-MovieAsset.defaultProps = {
-  handleShowDetails: () => {},
 };
 
 export default MovieAsset;

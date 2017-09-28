@@ -4,32 +4,24 @@ import React from 'react';
 
 import styles from './SearchTypeSwitcher.scss';
 
-const SearchTypeSwitcher = ({ type, handleChangeType }) => {
-  const cx = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
-  const handleChangeSearchType = (e) => {
-    handleChangeType(e.target.getAttribute('data-sortby'));
-  };
+const SearchTypeSwitcher = ({ type, handleChangeType }) => {
+  const handleChangeSearchType = newType => () => handleChangeType(newType);
 
   return (
     <div className={styles.SearchTypeSwitcher}>
       <div className={styles.searchByGroup}>
         <span className={styles.searchBy}>Search by</span>
         <button
-          className={cx('searchByBtn', (type === 'title' ?
-            'active' :
-            ''))}
-          onClick={handleChangeSearchType}
-          data-sortby="title"
+          className={cx('searchByBtn', { active: type === 'title' })}
+          onClick={handleChangeSearchType('title')}
         >
           Title
         </button>
         <button
-          className={cx('searchByBtn', (type === 'director' ?
-            'active' :
-            ''))}
-          onClick={handleChangeSearchType}
-          data-sortby="director"
+          className={cx('searchByBtn', { active: type === 'director' })}
+          onClick={handleChangeSearchType('director')}
         >
           Director
         </button>
