@@ -5,5 +5,10 @@
     "parser": "babel-eslint",
     "extends": [
         "airbnb"
-    ]
+    ],
+    "rules": {
+        "no-shadow": [2, {"allow": ["Component"]}],
+        "react/prop-types": [2, {"ignore": ["location"]}],
+        "react/no-did-mount-set-state": [0, {"allow": ["setState"]}]
+    }
 }
