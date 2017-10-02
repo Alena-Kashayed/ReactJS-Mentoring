@@ -1,20 +1,21 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import styles from './Details.scss';
+import { Link } from 'react-router-dom';
 
-const Details = ({ handleShowSearch, movieDetails }) => (
+import styles from './Details.scss';
+import data from '../assets/data.json';
+
+const id = 0;
+const movieDetails = data[id];
+
+const Details = () => (
   <section>
     <div className={styles.detailsWrapper}>
       <div className={styles.details}>
         <div className={styles.logoBlock}>
           <div className={styles.logo}>Netflixtrullete</div>
-          <button
-            className={styles.searchBtn}
-            type="button"
-            onClick={handleShowSearch}
-          >
-            Search
-          </button>
+          <Link to="/" className={styles.searchBtn}>
+              Search
+          </Link>
         </div>
         <div className={styles.content}>
           <div>
@@ -49,27 +50,5 @@ const Details = ({ handleShowSearch, movieDetails }) => (
     </div>
   </section>
 );
-
-Details.propTypes = {
-  movieDetails: PropTypes.shape({
-    category: PropTypes.string,
-    director: PropTypes.string,
-    mediatype: PropTypes.number,
-    poster: PropTypes.string,
-    rating: PropTypes.string,
-    release_year: PropTypes.string,
-    runtime: PropTypes.string,
-    show_cast: PropTypes.string,
-    show_id: PropTypes.number,
-    show_title: PropTypes.string,
-    summary: PropTypes.string,
-    unit: PropTypes.number,
-  }).isRequired,
-  handleShowSearch: PropTypes.func,
-};
-
-Details.defaultProps = {
-  handleShowSearch: () => {},
-};
 
 export default Details;
