@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 
 import MovieAsset from './MovieAsset/MovieAsset';
 import styles from './MovieList.scss';
-import data from '../assets/data.json';
 
 class MovieList extends Component {
   constructor(props) {
@@ -14,38 +15,33 @@ class MovieList extends Component {
   }
 
   componentDidMount = () => {
-    if (/^\/search$/.test(this.props.location.pathname)) {
+    if (/^\/search\//.test(this.props.location.pathname)) {
       const params = new URLSearchParams(this.props.location.search);
       if (
-        params.get('name') !== null &&
-        params.get('name') !== '' &&
-        /^(title|director)$/.test(params.get('type'))
+        params.get('query') !== null &&
+        params.get('query') !== ''
       ) {
         this.setState({
-          assets: data,
+          assets: this.props.assets,
         });
       }
     }
   };
 
   componentWillReceiveProps = (nextProps) => {
-    const { location } = this.props;
-    if (/^\/search$/.test(nextProps.location.pathname)) {
-      if (/^\/search$/.test(location.pathname) && nextProps.location.search !== location.search) {
-        const params = new URLSearchParams(nextProps.location.search);
-        if (
-          params.get('name') !== null &&
-          params.get('name') !== '' &&
-          /^(title|director)$/.test(params.get('type'))
-        ) {
-          this.setState({
-            assets: data,
-          });
-        } else {
-          this.state = {
-            assets: [],
-          };
-        }
+    if (/^\/search\//.test(nextProps.location.pathname)) {
+      const params = new URLSearchParams(nextProps.location.search);
+      if (
+        params.get('query') !== null &&
+        params.get('query') !== ''
+      ) {
+        this.setState({
+          assets: nextProps.assets,
+        });
+      } else {
+        this.state = {
+          assets: [],
+        };
       }
     }
   };
@@ -55,7 +51,7 @@ class MovieList extends Component {
         <div className={styles.movieList}>
           {this.state.assets.map(asset => (
             <MovieAsset
-              key={asset.show_id}
+              key={asset.id}
               asset={asset}
             />
           ))}
@@ -65,4 +61,29 @@ class MovieList extends Component {
   }
 }
 
-export default withRouter(MovieList);
+MovieList.propTypes = {
+  assets: PropTypes.arrayOf(
+    PropTypes.shape({
+      adult: PropTypes.bool,
+      backdrop_path: PropTypes.string,
+      genre_ids: PropTypes.arrayOf(PropTypes.number),
+      id: PropTypes.number,
+      original_language: PropTypes.string,
+      original_title: PropTypes.string,
+      overview: PropTypes.string,
+      popularity: PropTypes.number,
+      poster_path: PropTypes.string,
+      release_date: PropTypes.string,
+      title: PropTypes.string,
+      video: PropTypes.bool,
+      vote_average: PropTypes.number,
+      vote_count: PropTypes.number,
+    }).isRequired,
+  ).isRequired,
+};
+
+const mapStateToProps = state => (
+  state.reducer.results ? { assets: state.reducer.results.results } : { assets: [] }
+);
+
+export default withRouter(connect(mapStateToProps)(MovieList));

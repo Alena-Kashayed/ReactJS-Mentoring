@@ -6,7 +6,7 @@ import styles from './SearchTypeSwitcher.scss';
 
 const cx = classNames.bind(styles);
 
-const SearchTypeSwitcher = ({ type, handleChangeType }) => {
+const SearchTypeSwitcher = ({ typeOfQuery, handleChangeType }) => {
   const handleChangeSearchType = newType => () => handleChangeType(newType);
 
   return (
@@ -14,16 +14,16 @@ const SearchTypeSwitcher = ({ type, handleChangeType }) => {
       <div className={styles.searchByGroup}>
         <span className={styles.searchBy}>Search by</span>
         <button
-          className={cx('searchByBtn', { active: type === 'title' })}
-          onClick={handleChangeSearchType('title')}
+          className={cx('searchByBtn', { active: typeOfQuery === 'movie' })}
+          onClick={handleChangeSearchType('movie')}
         >
-          Title
+          Movie
         </button>
         <button
-          className={cx('searchByBtn', { active: type === 'director' })}
-          onClick={handleChangeSearchType('director')}
+          className={cx('searchByBtn', { active: typeOfQuery === 'tv' })}
+          onClick={handleChangeSearchType('tv')}
         >
-          Director
+          TV show
         </button>
       </div>
     </div>
@@ -32,7 +32,7 @@ const SearchTypeSwitcher = ({ type, handleChangeType }) => {
 
 SearchTypeSwitcher.propTypes = {
   handleChangeType: PropTypes.func,
-  type: PropTypes.string.isRequired,
+  typeOfQuery: PropTypes.string.isRequired,
 };
 
 SearchTypeSwitcher.defaultProps = {
