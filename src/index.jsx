@@ -2,15 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducers from './reducers';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { films, currentFilm, sortBy } from './reducers';
 
 import App from './App';
 
-const store = createStore(
-  reducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
+const reducer = combineReducers({
+  films,
+  currentFilm,
+  sortBy,
+});
+
+const store = createStore(reducer, composeWithDevTools(
+  applyMiddleware(),
+));
 
 ReactDOM.render((
   <Provider store={store}>

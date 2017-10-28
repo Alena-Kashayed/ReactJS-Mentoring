@@ -1,16 +1,24 @@
+import { SEARCH, SET_CURRENT_FILM, SORT_BY } from './constans';
+import fetchFilms from '../Api';
+
 export const getFilms = results => ({
-  type: 'SEARCH',
+  type: SEARCH,
   results,
 });
 
-export const fetchFilms = (query, typeOfQuery) => ((dispatch) => {
-  const URL = `https://api.themoviedb.org/3/search/${typeOfQuery}?api_key=da833af6d87a8331c27ee63a7fced1b1&query=${query}`;
-  return fetch(URL)
-    .then(response => response.json())
-    .then(results => dispatch(getFilms(results, query, typeOfQuery)));
-});
+export const getFilmList = (query, typeOfQuery, dispatch) => {
+  fetchFilms(query, typeOfQuery)
+    .then((results) => {
+      dispatch(getFilms(results));
+    });
+};
 
 export const setCurrentFilm = currentFilm => ({
-  type: 'SET_CURRENT_FILM',
+  type: SET_CURRENT_FILM,
   currentFilm,
+});
+
+export const setSortBy = sortBy => ({
+  type: SORT_BY,
+  sortBy,
 });

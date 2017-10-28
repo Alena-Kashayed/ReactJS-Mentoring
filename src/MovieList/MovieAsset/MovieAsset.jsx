@@ -7,7 +7,12 @@ import styles from './MovieAsset.scss';
 import { setCurrentFilm } from '../../actions';
 
 const MovieAsset = ({ asset, dispatch }) => {
-  const { id, title, release_date: releaseDate, poster_path: poster } = asset;
+  const {
+    id, title,
+    release_date: releaseDate,
+    first_air_date: firstAirDate,
+    poster_path: poster,
+  } = asset;
   const onSetCurrentFilm = () => {
     dispatch(setCurrentFilm(asset));
   };
@@ -20,14 +25,23 @@ const MovieAsset = ({ asset, dispatch }) => {
         >
           <img
             className={styles.moviePoster}
-            src={`https://image.tmdb.org/t/p/w300${poster}`}
+            src={
+              poster
+                ? `https://image.tmdb.org/t/p/w300${poster}`
+                : ''
+            }
             alt={title}
           />
         </div>
       </Link>
       <div className={styles.movieTitle}>
         <div>{title}</div>
-        <div className={styles.movieYear}>{releaseDate.split('-')[0]}</div>
+        {releaseDate
+          ? <div className={styles.movieYear}>{releaseDate.split('-')[0]}</div>
+          : null}
+        {firstAirDate
+          ? <div className={styles.movieYear}>{firstAirDate.split('-')[0]}</div>
+          : null}
       </div>
     </div>
   );

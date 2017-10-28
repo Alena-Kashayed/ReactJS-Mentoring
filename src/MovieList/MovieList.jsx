@@ -5,51 +5,46 @@ import { connect } from 'react-redux';
 
 import MovieAsset from './MovieAsset/MovieAsset';
 import styles from './MovieList.scss';
+import { getFilmList } from '../actions';
 
 class MovieList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      assets: [],
-    };
-  }
-
   componentDidMount = () => {
-    if (/^\/search\//.test(this.props.location.pathname)) {
-      const params = new URLSearchParams(this.props.location.search);
-      if (
-        params.get('query') !== null &&
-        params.get('query') !== ''
-      ) {
-        this.setState({
-          assets: this.props.assets,
-        });
+    const { dispatch, location } = this.props;
+    if (/^\/search\//.test(location.pathname)) {
+      const params = new URLSearchParams(location.search);
+      if (params.get('query')) {
+        getFilmList(
+          params.get('query'),
+          location.pathname.split('/')[2],
+          dispatch,
+        );
       }
     }
   };
 
   componentWillReceiveProps = (nextProps) => {
+    const { location, dispatch } = this.props;
+    const typeOfQuery = location.pathname.split('/')[2];
+    const newTypeOfQuery = nextProps.location.pathname.split('/')[2];
     if (/^\/search\//.test(nextProps.location.pathname)) {
-      const params = new URLSearchParams(nextProps.location.search);
-      if (
-        params.get('query') !== null &&
-        params.get('query') !== ''
-      ) {
-        this.setState({
-          assets: nextProps.assets,
-        });
-      } else {
-        this.state = {
-          assets: [],
-        };
+      if (/^\/search\//.test(location.pathname) && (nextProps.location.search !== location.search || typeOfQuery !== newTypeOfQuery)) {
+        const params = new URLSearchParams(nextProps.location.search);
+        if (params.get('query')) {
+          getFilmList(
+            params.get('query'),
+            newTypeOfQuery,
+            dispatch,
+          );
+        }
       }
     }
   };
   render() {
+    const { assets } = this.props;
     return (
-      this.state.assets.length ?
+      assets.length ?
         <div className={styles.movieList}>
-          {this.state.assets.map(asset => (
+          {assets.map(asset => (
             <MovieAsset
               key={asset.id}
               asset={asset}
@@ -80,10 +75,11 @@ MovieList.propTypes = {
       vote_count: PropTypes.number,
     }).isRequired,
   ).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => (
-  state.reducer.results ? { assets: state.reducer.results.results } : { assets: [] }
+  state.films.results ? { assets: state.films.results } : { assets: [] }
 );
 
 export default withRouter(connect(mapStateToProps)(MovieList));

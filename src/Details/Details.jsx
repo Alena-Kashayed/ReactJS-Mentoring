@@ -9,6 +9,7 @@ const Details = (props) => {
   const {
     title,
     release_date: releaseDate,
+    first_air_date: firstAirDate,
     poster_path: poster,
     vote_average: rating,
     overview: summary,
@@ -26,7 +27,11 @@ const Details = (props) => {
           <div className={styles.content}>
             <div>
               <img
-                src={`https://image.tmdb.org/t/p/w300${poster}`}
+                src={
+                  poster
+                    ? `https://image.tmdb.org/t/p/w300${poster}`
+                    : ''
+                }
                 alt={title}
               />
             </div>
@@ -38,7 +43,12 @@ const Details = (props) => {
                 </span>
               </h2>
               <div className={styles.movieInfo}>
-                <div className={styles.movieYear}>{releaseDate.split('-')[0]}</div>
+                {releaseDate
+                  ? <div className={styles.movieYear}>{releaseDate.split('-')[0]}</div>
+                  : null}
+                {firstAirDate
+                  ? <div className={styles.movieYear}>{firstAirDate.split('-')[0]}</div>
+                  : null}
               </div>
               <article className={styles.text}>
                 {summary}
@@ -71,7 +81,7 @@ Details.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  film: state.reducer.currentFilm,
+  film: state.currentFilm,
 });
 
 export default connect(mapStateToProps)(Details);

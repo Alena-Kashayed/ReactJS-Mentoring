@@ -1,7 +1,3 @@
-import { combineReducers } from 'redux';
-
-import reducer from './reducer';
-
-export default combineReducers({
-  reducer,
-});
+export films from './films';
+export currentFilm from './currentFilm';
+export sortBy from './sortBy';
