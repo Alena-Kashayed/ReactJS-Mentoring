@@ -1,65 +1,90 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import styles from './Details.scss';
+import { getCurrentFilm } from '../actions/index';
 
-const Details = (props) => {
-  const {
-    title,
-    release_date: releaseDate,
-    first_air_date: firstAirDate,
-    poster_path: poster,
-    vote_average: rating,
-    overview: summary,
-  } = props.film;
-  return (
-    <section>
-      <div className={styles.detailsWrapper}>
-        <div className={styles.details}>
-          <div className={styles.logoBlock}>
-            <div className={styles.logo}>Netflixtrullete</div>
-            <Link to="/search" className={styles.searchBtn}>
+class Details extends Component {
+  componentDidMount = () => {
+    const { dispatch, location } = this.props;
+    const pathnameArray = location.pathname.split('/');
+    dispatch(getCurrentFilm(pathnameArray[2], pathnameArray[3]));
+  };
+
+  componentWillReceiveProps = (nextProps) => {
+    const { location, dispatch } = this.props;
+    const pathnameArray = location.pathname.split('/');
+    const typeOfQuery = pathnameArray[2];
+    const id = pathnameArray[3];
+    const newPathnameArray = nextProps.location.pathname.split('/');
+    const newTypeOfQuery = newPathnameArray[2];
+    const newId = newPathnameArray[3];
+    if (typeOfQuery !== newTypeOfQuery || id !== newId) {
+      dispatch(getCurrentFilm(newTypeOfQuery, newId));
+    }
+  };
+
+  render() {
+    const { film } = this.props;
+    const {
+      title,
+      release_date: releaseDate,
+      first_air_date: firstAirDate,
+      poster_path: poster,
+      vote_average: rating,
+      overview: summary,
+      runtime,
+    } = film;
+    return (
+      <section>
+        <div className={styles.detailsWrapper}>
+          <div className={styles.details}>
+            <div className={styles.logoBlock}>
+              <div className={styles.logo}>Netflixtrullete</div>
+              <Link to="/search" className={styles.searchBtn}>
                 Search
-            </Link>
-          </div>
-          <div className={styles.content}>
-            <div>
-              <img
-                src={
-                  poster
-                    ? `https://image.tmdb.org/t/p/w300${poster}`
-                    : ''
-                }
-                alt={title}
-              />
+              </Link>
             </div>
-            <div className={styles.description}>
-              <h2 className={styles.movieTitle}>
-                {title}
-                <span className={styles.movieRating}>
-                  {rating}
-                </span>
-              </h2>
-              <div className={styles.movieInfo}>
-                {releaseDate
-                  ? <div className={styles.movieYear}>{releaseDate.split('-')[0]}</div>
-                  : null}
-                {firstAirDate
-                  ? <div className={styles.movieYear}>{firstAirDate.split('-')[0]}</div>
-                  : null}
+            <div className={styles.content}>
+              <div>
+                <img
+                  src={
+                    poster
+                      ? `https://image.tmdb.org/t/p/w300${poster}`
+                      : ''
+                  }
+                  alt={title}
+                />
               </div>
-              <article className={styles.text}>
-                {summary}
-              </article>
+              <div className={styles.description}>
+                <h2 className={styles.movieTitle}>
+                  {title}
+                  <span className={styles.movieRating}>
+                    {rating}
+                  </span>
+                </h2>
+                <div className={styles.movieInfo}>
+                  {releaseDate
+                    ? <div className={styles.movieYear}>{releaseDate.split('-')[0]}</div>
+                    : null}
+                  {firstAirDate
+                    ? <div className={styles.movieYear}>{firstAirDate.split('-')[0]}</div>
+                    : null}
+                </div>
+                <div className={styles.movieTime}>{runtime}</div>
+                <article className={styles.text}>
+                  {summary}
+                </article>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  );
-};
+      </section>
+    );
+  }
+}
 
 Details.propTypes = {
   film: PropTypes.shape({
@@ -78,6 +103,7 @@ Details.propTypes = {
     vote_average: PropTypes.number,
     vote_count: PropTypes.number,
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

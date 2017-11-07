@@ -43,6 +43,7 @@
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-form": "^7.0.4",
+    "redux-thunk": "^2.2.0",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.5.6",
     "webpack-merge": "^4.1.0"

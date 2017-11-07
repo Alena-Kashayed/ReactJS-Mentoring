@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import styles from './Search.scss';
 import SearchTypeSwitcher from './SearchTypeSwitcher/SearchTypeSwitcher';
@@ -14,10 +13,11 @@ class Search extends Component {
     };
   }
   componentDidMount() {
-    const params = new URLSearchParams(this.props.location.search);
+    const { pathname, search } = this.props.location;
+    const params = new URLSearchParams(search);
     this.setState({
       query: params.get('query') || '',
-      typeOfQuery: this.props.location.pathname.split('/')[2] || 'movie',
+      typeOfQuery: pathname.split('/')[2] || 'movie',
     });
   }
   handleChangeSearch = (e) => {
@@ -69,4 +69,4 @@ class Search extends Component {
   }
 }
 
-export default connect()(Search);
+export default Search;

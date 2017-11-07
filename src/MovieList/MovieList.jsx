@@ -5,49 +5,69 @@ import { connect } from 'react-redux';
 
 import MovieAsset from './MovieAsset/MovieAsset';
 import styles from './MovieList.scss';
-import { getFilmList } from '../actions';
+import { getFilms } from '../actions';
 
 class MovieList extends Component {
   componentDidMount = () => {
-    const { dispatch, location } = this.props;
+    const { location } = this.props;
     if (/^\/search\//.test(location.pathname)) {
-      const params = new URLSearchParams(location.search);
-      if (params.get('query')) {
-        getFilmList(
-          params.get('query'),
-          location.pathname.split('/')[2],
-          dispatch,
-        );
-      }
+      this.checkQuery(location);
     }
   };
 
   componentWillReceiveProps = (nextProps) => {
-    const { location, dispatch } = this.props;
+    const { location } = this.props;
     const typeOfQuery = location.pathname.split('/')[2];
     const newTypeOfQuery = nextProps.location.pathname.split('/')[2];
     if (/^\/search\//.test(nextProps.location.pathname)) {
-      if (/^\/search\//.test(location.pathname) && (nextProps.location.search !== location.search || typeOfQuery !== newTypeOfQuery)) {
-        const params = new URLSearchParams(nextProps.location.search);
-        if (params.get('query')) {
-          getFilmList(
-            params.get('query'),
-            newTypeOfQuery,
-            dispatch,
-          );
-        }
+      if (nextProps.location.search !== location.search || typeOfQuery !== newTypeOfQuery) {
+        this.checkQuery(nextProps.location);
       }
     }
   };
+
+  typeOfQuery;
+
+  checkQuery = (location) => {
+    const { dispatch } = this.props;
+    const params = new URLSearchParams(location.search);
+    if (params.get('query')) {
+      this.typeOfQuery = location.pathname.split('/')[2];
+      dispatch(getFilms(params.get('query'), this.typeOfQuery));
+    }
+  };
+
+  sortAssets = (assets, sortBy) => {
+    const sortAssets = assets;
+    switch (sortBy) {
+      case 'releaseDay':
+        sortAssets.sort((item1, item2) => {
+          const releaseDate1 = new Date(item1.release_date);
+          const releaseDate2 = new Date(item2.release_date);
+          return releaseDate2.getTime() - releaseDate1.getTime();
+        });
+        return sortAssets;
+      case 'rating':
+        sortAssets.sort((item1, item2) => (
+          item2.vote_average - item1.vote_average
+        ));
+        return sortAssets;
+      default:
+        return sortAssets;
+    }
+  };
+
   render() {
-    const { assets } = this.props;
+    const { assets, sortBy } = this.props;
+    const sortAssets = this.sortAssets(assets, sortBy);
     return (
-      assets.length ?
+      sortAssets.length ?
         <div className={styles.movieList}>
-          {assets.map(asset => (
+          {sortAssets.map(asset => (
             <MovieAsset
               key={asset.id}
               asset={asset}
+              typeOfQuery={this.typeOfQuery}
             />
           ))}
         </div> :
@@ -76,10 +96,16 @@ MovieList.propTypes = {
     }).isRequired,
   ).isRequired,
   dispatch: PropTypes.func.isRequired,
+  sortBy: PropTypes.string,
 };
 
-const mapStateToProps = state => (
-  state.films.results ? { assets: state.films.results } : { assets: [] }
-);
+MovieList.defaultProps = {
+  sortBy: '',
+};
+
+const mapStateToProps = state => ({
+  assets: state.films.results,
+  sortBy: state.sortBy.value,
+});
 
 export default withRouter(connect(mapStateToProps)(MovieList));

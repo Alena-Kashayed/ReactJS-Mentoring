@@ -4,21 +4,17 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import styles from './MovieAsset.scss';
-import { setCurrentFilm } from '../../actions';
 
-const MovieAsset = ({ asset, dispatch }) => {
+const MovieAsset = ({ asset, typeOfQuery }) => {
   const {
     id, title,
     release_date: releaseDate,
     first_air_date: firstAirDate,
     poster_path: poster,
   } = asset;
-  const onSetCurrentFilm = () => {
-    dispatch(setCurrentFilm(asset));
-  };
   return (
     <div className={styles.movieAsset}>
-      <Link to={`/film/${id}`} onClick={onSetCurrentFilm}>
+      <Link to={`/film/${typeOfQuery}/${id}`}>
         <div
           className={styles.poster}
           role="presentation"
@@ -64,7 +60,7 @@ MovieAsset.propTypes = {
     vote_average: PropTypes.number,
     vote_count: PropTypes.number,
   }).isRequired,
-  dispatch: PropTypes.func.isRequired,
+  typeOfQuery: PropTypes.string.isRequired,
 };
 
 export default connect()(MovieAsset);

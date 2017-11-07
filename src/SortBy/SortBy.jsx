@@ -6,17 +6,26 @@ import { connect } from 'react-redux';
 import styles from './SortBy.scss';
 import { setSortBy } from '../actions';
 
-const SortBy = ({ movieDetails, dispatch }) => {
+const SortBy = ({ movieDetails, sortBy, dispatch }) => {
   const cx = classNames.bind(styles);
-  const handleSortBy = (e) => {
-    const sortBy = e.target.dataset.sortBy;
-    dispatch(setSortBy(sortBy));
+  const handleSortBy = (value) => {
+    dispatch(setSortBy(value));
   };
   return !(movieDetails) ? (
     <div className={styles.sortByGroup}>
       <span className={styles.sortBy}>Sort by</span>
-      <button onClick={handleSortBy} data-sort-by={'releaseDay'} className={cx('releaseDay', 'sortByBtn')}>release day</button>
-      <button onClick={handleSortBy} data-sort-by={'rating'} className={cx('rating', 'sortByBtn', 'active')}>rating</button>
+      <button
+        onClick={() => handleSortBy('releaseDay')}
+        className={cx('releaseDay', 'sortByBtn', { active: sortBy === 'releaseDay' })}
+      >
+        release day
+      </button>
+      <button
+        onClick={() => handleSortBy('rating')}
+        className={cx('rating', 'sortByBtn', { active: sortBy === 'rating' })}
+      >
+        rating
+      </button>
     </div>
   ) : null;
 };
@@ -37,10 +46,16 @@ SortBy.propTypes = {
     unit: PropTypes.number,
   }),
   dispatch: PropTypes.func.isRequired,
+  sortBy: PropTypes.string,
 };
 
 SortBy.defaultProps = {
   movieDetails: null,
+  sortBy: '',
 };
 
-export default connect()(SortBy);
+const mapStateToProps = state => ({
+  sortBy: state.sortBy.value,
+});
+
+export default connect(mapStateToProps)(SortBy);
