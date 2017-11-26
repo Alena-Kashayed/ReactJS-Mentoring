@@ -1,6 +1,6 @@
 import { GET_CURRENT_FILM, CLEAR_CURRENT_FILM } from '../actions/constans';
 
-const current = (state = {}, action) => {
+const currentFilm = (state = {}, action) => {
   switch (action.type) {
     case GET_CURRENT_FILM:
       return {
@@ -13,4 +13,4 @@ const current = (state = {}, action) => {
   }
 };
 
-export default current;
+export default currentFilm;

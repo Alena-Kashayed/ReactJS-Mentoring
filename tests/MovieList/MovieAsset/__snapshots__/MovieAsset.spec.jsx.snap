@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieAsset is rendered correctly 1`] = `
+<div
+  className="movieAsset"
+>
+  <Link
+    replace={false}
+    to="/film/movie/1"
+  >
+    <div
+      className="poster"
+      role="presentation"
+    >
+      <img
+        alt="Title"
+        className="moviePoster"
+        src="https://image.tmdb.org/t/p/w300/123.jpg"
+      />
+    </div>
+  </Link>
+  <div
+    className="movieTitle"
+  >
+    <div>
+      Title
+    </div>
+    <div
+      className="movieYear"
+    >
+      2017
+    </div>
+    <div
+      className="movieYear"
+    >
+      2017
+    </div>
+  </div>
+</div>
+`;

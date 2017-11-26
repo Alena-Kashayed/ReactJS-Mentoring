@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App is rendered correctly 1`] = `
+<div
+  className="app"
+>
+  <Connect(Loader) />
+  <div
+    className="headerBlock"
+  >
+    <Switch>
+      <Route
+        component={[Function]}
+        path="/film/:id"
+      />
+      <Route
+        component={[Function]}
+        path="/"
+      />
+    </Switch>
+    <div
+      className="info"
+    >
+      <Connect(InfoBar) />
+      <Connect(SortBy) />
+    </div>
+  </div>
+  <div
+    className="contentBlock"
+  >
+    <withRouter(Connect(MovieList)) />
+  </div>
+  <div
+    className="footerBlock"
+  >
+    <Footer />
+  </div>
+</div>
+`;

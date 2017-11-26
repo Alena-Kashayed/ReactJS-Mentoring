@@ -27,7 +27,11 @@ class MovieList extends Component {
     const newTypeOfQuery = nextProps.location.pathname.split('/')[2];
     if (/^\/search\//.test(nextProps.location.pathname)) {
       if (nextProps.location.search !== location.search || typeOfQuery !== newTypeOfQuery) {
-        this.checkQuery(nextProps.location);
+        this.setState({
+          typeOfQuery: nextProps.location.pathname.split('/')[2],
+        }, () => {
+          this.checkQuery(nextProps.location);
+        });
       }
     }
   };
@@ -37,9 +41,6 @@ class MovieList extends Component {
     const { typeOfQuery } = this.state;
     const params = new URLSearchParams(location.search);
     if (params.get('query')) {
-      this.setState({
-        typeOfQuery: location.pathname.split('/')[2],
-      });
       dispatch(getFilms(params.get('query'), typeOfQuery));
     }
   };
