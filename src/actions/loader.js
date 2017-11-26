@@ -1,8 +1,11 @@
-import { LOADING } from './constans';
+import { START_LOADING, STOP_LOADING } from './constans';
 
-const startLoading = status => ({
-  type: LOADING,
-  status,
-});
+export const startLoading = {
+  type: START_LOADING,
+  status: true,
+};
 
-export default startLoading;
+export const stopLoading = {
+  type: STOP_LOADING,
+  status: false,
+};

@@ -8,6 +8,12 @@ import styles from './MovieList.scss';
 import { getFilms } from '../actions';
 
 class MovieList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      typeOfQuery: 'movie',
+    };
+  }
   componentDidMount = () => {
     const { location } = this.props;
     if (/^\/search\//.test(location.pathname)) {
@@ -26,39 +32,38 @@ class MovieList extends Component {
     }
   };
 
-  typeOfQuery;
-
   checkQuery = (location) => {
     const { dispatch } = this.props;
+    const { typeOfQuery } = this.state;
     const params = new URLSearchParams(location.search);
     if (params.get('query')) {
-      this.typeOfQuery = location.pathname.split('/')[2];
-      dispatch(getFilms(params.get('query'), this.typeOfQuery));
+      this.setState({
+        typeOfQuery: location.pathname.split('/')[2],
+      });
+      dispatch(getFilms(params.get('query'), typeOfQuery));
     }
   };
 
   sortAssets = (assets, sortBy) => {
-    const sortAssets = assets;
     switch (sortBy) {
       case 'releaseDay':
-        sortAssets.sort((item1, item2) => {
+        return [...assets].sort((item1, item2) => {
           const releaseDate1 = new Date(item1.release_date);
           const releaseDate2 = new Date(item2.release_date);
           return releaseDate2.getTime() - releaseDate1.getTime();
         });
-        return sortAssets;
       case 'rating':
-        sortAssets.sort((item1, item2) => (
+        return [...assets].sort((item1, item2) => (
           item2.vote_average - item1.vote_average
         ));
-        return sortAssets;
       default:
-        return sortAssets;
+        return assets;
     }
   };
 
   render() {
     const { assets, sortBy } = this.props;
+    const { typeOfQuery } = this.state;
     const sortAssets = this.sortAssets(assets, sortBy);
     return (
       sortAssets.length ?
@@ -67,7 +72,7 @@ class MovieList extends Component {
             <MovieAsset
               key={asset.id}
               asset={asset}
-              typeOfQuery={this.typeOfQuery}
+              typeOfQuery={typeOfQuery}
             />
           ))}
         </div> :

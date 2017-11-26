@@ -16,15 +16,17 @@ class Details extends Component {
   componentWillReceiveProps = (nextProps) => {
     const { location, dispatch } = this.props;
     const pathnameArray = location.pathname.split('/');
-    const typeOfQuery = pathnameArray[2];
-    const id = pathnameArray[3];
+    const [, , typeOfQuery, id] = pathnameArray;
     const newPathnameArray = nextProps.location.pathname.split('/');
-    const newTypeOfQuery = newPathnameArray[2];
-    const newId = newPathnameArray[3];
+    const [, , newTypeOfQuery, newId] = newPathnameArray;
     if (typeOfQuery !== newTypeOfQuery || id !== newId) {
       dispatch(getCurrentFilm(newTypeOfQuery, newId));
     }
   };
+
+  renderYear = date => (
+    date ? <div className={styles.movieYear}>{date.split('-')[0]}</div> : null
+  );
 
   render() {
     const { film } = this.props;
@@ -66,12 +68,8 @@ class Details extends Component {
                   </span>
                 </h2>
                 <div className={styles.movieInfo}>
-                  {releaseDate
-                    ? <div className={styles.movieYear}>{releaseDate.split('-')[0]}</div>
-                    : null}
-                  {firstAirDate
-                    ? <div className={styles.movieYear}>{firstAirDate.split('-')[0]}</div>
-                    : null}
+                  {this.renderYear(releaseDate)}
+                  {this.renderYear(firstAirDate)}
                 </div>
                 <div className={styles.movieTime}>{runtime}</div>
                 <article className={styles.text}>

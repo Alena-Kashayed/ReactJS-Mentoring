@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import styles from './Search.scss';
 import SearchTypeSwitcher from './SearchTypeSwitcher/SearchTypeSwitcher';
+import styles from './Search.scss';
+import { clearCurrentFilm } from '../actions';
 
 class Search extends Component {
   constructor(props) {
@@ -14,11 +17,13 @@ class Search extends Component {
   }
   componentDidMount() {
     const { pathname, search } = this.props.location;
+    const { dispatch } = this.props;
     const params = new URLSearchParams(search);
     this.setState({
       query: params.get('query') || '',
       typeOfQuery: pathname.split('/')[2] || 'movie',
     });
+    dispatch(clearCurrentFilm);
   }
   handleChangeSearch = (e) => {
     this.setState({
@@ -69,4 +74,8 @@ class Search extends Component {
   }
 }
 
-export default Search;
+Search.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
+export default connect()(Search);

@@ -1,3 +1,3 @@
-export { getFilms, getCurrentFilm } from './film';
+export { getFilms, getCurrentFilm, clearCurrentFilm } from './film';
 export setSortBy from './sort';
-export startLoading from './loader';
+export { startLoading, stopLoading } from './loader';

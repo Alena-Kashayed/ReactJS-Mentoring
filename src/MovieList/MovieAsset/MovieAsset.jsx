@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import styles from './MovieAsset.scss';
 
@@ -12,6 +11,11 @@ const MovieAsset = ({ asset, typeOfQuery }) => {
     first_air_date: firstAirDate,
     poster_path: poster,
   } = asset;
+
+  const renderYear = date => (
+    date ? <div className={styles.movieYear}>{date.split('-')[0]}</div> : null
+  );
+
   return (
     <div className={styles.movieAsset}>
       <Link to={`/film/${typeOfQuery}/${id}`}>
@@ -32,12 +36,8 @@ const MovieAsset = ({ asset, typeOfQuery }) => {
       </Link>
       <div className={styles.movieTitle}>
         <div>{title}</div>
-        {releaseDate
-          ? <div className={styles.movieYear}>{releaseDate.split('-')[0]}</div>
-          : null}
-        {firstAirDate
-          ? <div className={styles.movieYear}>{firstAirDate.split('-')[0]}</div>
-          : null}
+        {renderYear(releaseDate)}
+        {renderYear(firstAirDate)}
       </div>
     </div>
   );
@@ -63,4 +63,4 @@ MovieAsset.propTypes = {
   typeOfQuery: PropTypes.string.isRequired,
 };
 
-export default connect()(MovieAsset);
+export default MovieAsset;
