@@ -4,11 +4,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import styles from './SortBy.scss';
-import { setSortBy } from '../actions';
+import { setSortByReleaseDay, setSortByRating } from '../actions';
 
 const cx = classNames.bind(styles);
-const handleSortBy = (dispatch, value) => {
-  dispatch(setSortBy(value));
+const handleSortByReleaseDay = (dispatch) => {
+  dispatch(setSortByReleaseDay);
+};
+const handleSortByRating = (dispatch) => {
+  dispatch(setSortByRating);
 };
 
 const SortBy = ({ currentFilm, sortBy, dispatch }) => (
@@ -17,13 +20,13 @@ const SortBy = ({ currentFilm, sortBy, dispatch }) => (
       <div className={styles.sortByGroup}>
         <span className={styles.sortBy}>Sort by</span>
         <button
-          onClick={() => handleSortBy(dispatch, 'releaseDay')}
+          onClick={() => handleSortByReleaseDay(dispatch)}
           className={cx('releaseDay', 'sortByBtn', { active: sortBy === 'releaseDay' })}
         >
           release day
         </button>
         <button
-          onClick={() => handleSortBy(dispatch, 'rating')}
+          onClick={() => handleSortByRating(dispatch)}
           className={cx('rating', 'sortByBtn', { active: sortBy === 'rating' })}
         >
           rating

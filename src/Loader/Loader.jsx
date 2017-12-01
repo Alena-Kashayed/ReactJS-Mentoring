@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 const Loader = ({ status }) => (
   status ?
     <div className={styles.loader}>
-      <div className={styles.preloader1}>
+      <div className={styles.preloader}>
         <div>Loading</div>
         <span className={cx('line', 'line1')} />
         <span className={cx('line', 'line2')} />

@@ -34,6 +34,8 @@ module.exports = merge(commonConfig, {
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new UglifyJSPlugin(),
-    new ExtractTextPlugin('style_[hash].css'),
+    new ExtractTextPlugin({
+      filename: 'style_[hash].css',
+    }),
   ],
 });

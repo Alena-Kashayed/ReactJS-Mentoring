@@ -8,7 +8,7 @@
   z-index: 3;
   background-color: rgba(0, 0, 0, 0.5);
 
-  .preloader1 {
+  .preloader {
     width: 66px;
     height: 12px;
   }
@@ -23,7 +23,7 @@
     letter-spacing: 2px;
   }
 
-  .preloader1 .line {
+  .preloader .line {
     width: 1px;
     height: 12px;
     background: #fff;
@@ -32,14 +32,14 @@
     animation: opacity-1 1000ms infinite ease-in-out;
   }
 
-  .preloader1 .line1 { animation-delay: 800ms; }
-  .preloader1 .line2 { animation-delay: 600ms; }
-  .preloader1 .line3 { animation-delay: 400ms; }
-  .preloader1 .line4 { animation-delay: 200ms; }
-  .preloader1 .line6 { animation-delay: 200ms; }
-  .preloader1 .line7 { animation-delay: 400ms; }
-  .preloader1 .line8 { animation-delay: 600ms; }
-  .preloader1 .line9 { animation-delay: 800ms; }
+  .preloader .line1 { animation-delay: 800ms; }
+  .preloader .line2 { animation-delay: 600ms; }
+  .preloader .line3 { animation-delay: 400ms; }
+  .preloader .line4 { animation-delay: 200ms; }
+  .preloader .line6 { animation-delay: 200ms; }
+  .preloader .line7 { animation-delay: 400ms; }
+  .preloader .line8 { animation-delay: 600ms; }
+  .preloader .line9 { animation-delay: 800ms; }
 
   @keyframes opacity-1 {
     0% {

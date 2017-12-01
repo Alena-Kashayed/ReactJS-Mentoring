@@ -1,3 +1,3 @@
 export { getFilms, getCurrentFilm, clearCurrentFilm } from './film';
-export setSortBy from './sort';
+export { setSortByReleaseDay, setSortByRating } from './sort';
 export { startLoading, stopLoading } from './loader';

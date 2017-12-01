@@ -1,13 +1,41 @@
 {
   "presets": [
     ["env", {
-      "modules": false
+      "modules": false,
+      "targets": {
+        "browsers": ["last 2 versions"]
+      }
     }],
     "react",
     "stage-1"
   ],
-  "plugins": [
-    "transform-class-properties",
-    "transform-object-rest-spread"
-  ]
+  "env": {
+    "test": {
+      "presets": [
+        ["env", {
+          "targets": {
+            "node": "current"
+          }
+        }]
+      ]
+    },
+    "production": {
+      "presets": [
+        ["env", {
+          "targets": {
+            "node": "current"
+          }
+        }],
+        "stage-1"
+      ],
+      "plugins": [
+        [
+          "css-modules-transform", {
+            "preprocessCss": "./preprocessCss/module-exporting-a-function.js",
+            "extensions": [".css", ".scss"]
+          }
+        ]
+      ]
+    }
+  }
 }

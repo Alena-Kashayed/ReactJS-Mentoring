@@ -1,8 +1,11 @@
-import { SORT_BY } from './constans';
+import { RELEASE_DAY, RATING } from './constans';
 
-const setSortBy = sortBy => ({
-  type: SORT_BY,
-  sortBy,
+export const setSortByReleaseDay = () => ({
+  type: RELEASE_DAY,
+  sortBy: 'releaseDay',
 });
 
-export default setSortBy;
+export const setSortByRating = () => ({
+  type: RATING,
+  sortBy: 'rating',
+});
