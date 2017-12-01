@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import thunk from 'redux-thunk';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { StaticRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
@@ -21,7 +21,7 @@ const store = createStore(reducer, composeEnhancers(
   applyMiddleware(thunk),
 ));
 
-ReactDOM.render((
+ReactDOM.hydrate((
   <Provider store={store}>
     <Router>
       <App />
