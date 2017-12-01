@@ -1,13 +1,17 @@
 {
   "presets": [
     ["env", {
-      "modules": "commonjs"
+      "modules": "false"
     }],
     "react",
     "stage-1"
   ],
   "plugins": [
-    "transform-class-properties",
-    "transform-object-rest-spread"
+//    [
+//      "css-modules-transform", {
+//        "preprocessCss": "./preprocessCss/module-exporting-a-function.js",
+//        "extensions": [".css", ".scss"]
+//      }
+//    ]
   ]
 }
