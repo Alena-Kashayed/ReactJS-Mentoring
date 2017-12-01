@@ -1,34 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SearchTypeSwitcher is rendered correctly 1`] = `
-<SearchTypeSwitcher
-  handleChangeType={[Function]}
-  typeOfQuery="movie"
+<div
+  className="SearchTypeSwitcher"
 >
   <div
-    className="SearchTypeSwitcher"
+    className="searchByGroup"
   >
-    <div
-      className="searchByGroup"
+    <span
+      className="searchBy"
     >
-      <span
-        className="searchBy"
-      >
-        Search by
-      </span>
-      <button
-        className="searchByBtn active"
-        onClick={[Function]}
-      >
-        Movie
-      </button>
-      <button
-        className="searchByBtn"
-        onClick={[Function]}
-      >
-        TV show
-      </button>
-    </div>
+      Search by
+    </span>
+    <button
+      className="searchByBtn active"
+      onClick={[Function]}
+    >
+      Movie
+    </button>
+    <button
+      className="searchByBtn"
+      onClick={[Function]}
+    >
+      TV show
+    </button>
   </div>
-</SearchTypeSwitcher>
+</div>
 `;
