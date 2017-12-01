@@ -1,36 +1,42 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import styles from './Search.scss';
 import SearchTypeSwitcher from './SearchTypeSwitcher/SearchTypeSwitcher';
+import styles from './Search.scss';
+import { clearCurrentFilm } from '../actions';
 
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      type: '',
+      query: '',
+      typeOfQuery: '',
     };
   }
   componentDidMount() {
-    const params = new URLSearchParams(this.props.location.search);
+    const { pathname, search } = this.props.location;
+    const { dispatch } = this.props;
+    const params = new URLSearchParams(search);
     this.setState({
-      name: params.get('name') || '',
-      type: params.get('type') || 'title',
+      query: params.get('query') || '',
+      typeOfQuery: pathname.split('/')[2] || 'movie',
     });
+    dispatch(clearCurrentFilm);
   }
   handleChangeSearch = (e) => {
     this.setState({
-      name: e.target.value,
+      query: e.target.value,
     });
   };
-  handleChangeType = (type) => {
+  handleChangeType = (typeOfQuery) => {
     this.setState({
-      type,
+      typeOfQuery,
     });
   };
   render() {
-    const { name, type } = this.state;
+    const { query, typeOfQuery } = this.state;
     return (
       <div>
         <section className={styles.searchWrapper}>
@@ -45,15 +51,18 @@ class Search extends Component {
                 className={styles.searchInput}
                 type="text"
                 placeholder="Quentin Tarantino"
-                value={name}
+                value={query}
                 onChange={this.handleChangeSearch}
               />
               <div className={styles.switcherGroup}>
                 <SearchTypeSwitcher
-                  type={type}
+                  typeOfQuery={typeOfQuery}
                   handleChangeType={this.handleChangeType}
                 />
-                <Link to={`/search?name=${name}&type=${type}`} className={styles.searchByBtn}>
+                <Link
+                  to={`/search/${typeOfQuery}?query=${query}`}
+                  className={styles.searchByBtn}
+                >
                   Search
                 </Link>
               </div>
@@ -65,4 +74,8 @@ class Search extends Component {
   }
 }
 
-export default Search;
+Search.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
+export default connect()(Search);

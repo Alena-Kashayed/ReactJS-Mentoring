@@ -1,62 +1,78 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 
 import MovieAsset from './MovieAsset/MovieAsset';
 import styles from './MovieList.scss';
-import data from '../assets/data.json';
+import { getFilms } from '../actions';
 
 class MovieList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      assets: [],
+      typeOfQuery: 'movie',
     };
   }
-
   componentDidMount = () => {
-    if (/^\/search$/.test(this.props.location.pathname)) {
-      const params = new URLSearchParams(this.props.location.search);
-      if (
-        params.get('name') !== null &&
-        params.get('name') !== '' &&
-        /^(title|director)$/.test(params.get('type'))
-      ) {
-        this.setState({
-          assets: data,
-        });
-      }
+    const { location } = this.props;
+    if (/^\/search\//.test(location.pathname)) {
+      this.checkQuery(location);
     }
   };
 
   componentWillReceiveProps = (nextProps) => {
     const { location } = this.props;
-    if (/^\/search$/.test(nextProps.location.pathname)) {
-      if (/^\/search$/.test(location.pathname) && nextProps.location.search !== location.search) {
-        const params = new URLSearchParams(nextProps.location.search);
-        if (
-          params.get('name') !== null &&
-          params.get('name') !== '' &&
-          /^(title|director)$/.test(params.get('type'))
-        ) {
-          this.setState({
-            assets: data,
-          });
-        } else {
-          this.state = {
-            assets: [],
-          };
-        }
+    const typeOfQuery = location.pathname.split('/')[2];
+    const newTypeOfQuery = nextProps.location.pathname.split('/')[2];
+    if (/^\/search\//.test(nextProps.location.pathname)) {
+      if (nextProps.location.search !== location.search || typeOfQuery !== newTypeOfQuery) {
+        this.checkQuery(nextProps.location);
       }
     }
   };
+
+  checkQuery = (location) => {
+    const { dispatch } = this.props;
+    const { typeOfQuery } = this.state;
+    const params = new URLSearchParams(location.search);
+    if (params.get('query')) {
+      this.setState({
+        typeOfQuery: location.pathname.split('/')[2],
+      });
+      dispatch(getFilms(params.get('query'), typeOfQuery));
+    }
+  };
+
+  sortAssets = (assets, sortBy) => {
+    switch (sortBy) {
+      case 'releaseDay':
+        return [...assets].sort((item1, item2) => {
+          const releaseDate1 = new Date(item1.release_date);
+          const releaseDate2 = new Date(item2.release_date);
+          return releaseDate2.getTime() - releaseDate1.getTime();
+        });
+      case 'rating':
+        return [...assets].sort((item1, item2) => (
+          item2.vote_average - item1.vote_average
+        ));
+      default:
+        return assets;
+    }
+  };
+
   render() {
+    const { assets, sortBy } = this.props;
+    const { typeOfQuery } = this.state;
+    const sortAssets = this.sortAssets(assets, sortBy);
     return (
-      this.state.assets.length ?
+      sortAssets.length ?
         <div className={styles.movieList}>
-          {this.state.assets.map(asset => (
+          {sortAssets.map(asset => (
             <MovieAsset
-              key={asset.show_id}
+              key={asset.id}
               asset={asset}
+              typeOfQuery={typeOfQuery}
             />
           ))}
         </div> :
@@ -65,4 +81,36 @@ class MovieList extends Component {
   }
 }
 
-export default withRouter(MovieList);
+MovieList.propTypes = {
+  assets: PropTypes.arrayOf(
+    PropTypes.shape({
+      adult: PropTypes.bool,
+      backdrop_path: PropTypes.string,
+      genre_ids: PropTypes.arrayOf(PropTypes.number),
+      id: PropTypes.number,
+      original_language: PropTypes.string,
+      original_title: PropTypes.string,
+      overview: PropTypes.string,
+      popularity: PropTypes.number,
+      poster_path: PropTypes.string,
+      release_date: PropTypes.string,
+      title: PropTypes.string,
+      video: PropTypes.bool,
+      vote_average: PropTypes.number,
+      vote_count: PropTypes.number,
+    }).isRequired,
+  ).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  sortBy: PropTypes.string,
+};
+
+MovieList.defaultProps = {
+  sortBy: '',
+};
+
+const mapStateToProps = state => ({
+  assets: state.films.results,
+  sortBy: state.sortBy.value,
+});
+
+export default withRouter(connect(mapStateToProps)(MovieList));

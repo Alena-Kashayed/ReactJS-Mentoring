@@ -8,9 +8,11 @@ import Footer from './Footer/Footer';
 import styles from './App.scss';
 import InfoBar from './InfoBar/InfoBar';
 import SortBy from './SortBy/SortBy';
+import Loader from './Loader/Loader';
 
 const App = () => (
   <div className={styles.app}>
+    <Loader />
     <div className={styles.headerBlock}>
       <Switch>
         <Route path="/film/:id" component={Details} />

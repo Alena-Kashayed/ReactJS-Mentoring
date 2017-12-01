@@ -3,7 +3,8 @@
     ["env", {
       "modules": false
     }],
-    "react"
+    "react",
+    "stage-1"
   ],
   "plugins": [
     "transform-class-properties",
