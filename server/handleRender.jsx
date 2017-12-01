@@ -9,7 +9,7 @@ import { films, currentFilm, sortBy, loader } from '../src/reducers';
 
 import App from '../src/App';
 
-const renderFullPage = html => `
+const renderFullPage = (html, preloadedState) => `
   <!DOCTYPE html>
   <html lang="en">
     <head>
@@ -28,11 +28,14 @@ const renderFullPage = html => `
           height: 100%;
         }
       </style>
-      <link href="/style_e2db88ee003af77328e9.css" rel="stylesheet">
+      <link href="/style_daa921b1cb6b1b748eaf.css" rel="stylesheet">
     </head>
     <body>
       <div id="root">${html}</div>
-      <script type="text/javascript" src="/main_e2db88ee003af77328e9.js"></script>
+      <script>
+        window.PRELOADED_STATE = ${JSON.stringify(preloadedState).replace(/</g, '\\\u003c')}
+      </script>
+      <script type="text/javascript" src="/main_daa921b1cb6b1b748eaf.js"></script>
     </body>
   </html>
 `;
@@ -50,13 +53,14 @@ const store = createStore(reducer, composeEnhancers(
 ));
 
 const handleRender = (req, res) => {
+  const preloadedState = store.getState();
   const html = renderToString(
     <Provider store={store}>
       <Router>
         <App />
       </Router>
     </Provider>);
-  res.send(renderFullPage(html));
+  res.send(renderFullPage(html, preloadedState));
 };
 
 export default handleRender;

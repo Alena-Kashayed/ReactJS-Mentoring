@@ -18,6 +18,24 @@
           }
         }]
       ]
+    },
+    "production": {
+      "presets": [
+        ["env", {
+          "targets": {
+            "node": "current"
+          }
+        }],
+        "stage-1"
+      ],
+      "plugins": [
+        [
+          "css-modules-transform", {
+            "preprocessCss": "./preprocessCss/module-exporting-a-function.js",
+            "extensions": [".css", ".scss"]
+          }
+        ]
+      ]
     }
   }
 }
