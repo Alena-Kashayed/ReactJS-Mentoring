@@ -1,11 +1,12 @@
 const express = require('express');
-const handleRender = require('./handleRender.jsx');
 
 const app = express();
 
 app.use(express.static(`${__dirname}/dist`));
 
-app.get('/', handleRender);
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
 
 app.listen(3001, () => {
 
