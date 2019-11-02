@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchTypeSwitcher is rendered correctly 1`] = `
+<div
+  className="SearchTypeSwitcher"
+>
+  <div
+    className="searchByGroup"
+  >
+    <span
+      className="searchBy"
+    >
+      Search by
+    </span>
+    <button
+      className="searchByBtn active"
+      onClick={[Function]}
+    >
+      Movie
+    </button>
+    <button
+      className="searchByBtn"
+      onClick={[Function]}
+    >
+      TV show
+    </button>
+  </div>
+</div>
+`;
